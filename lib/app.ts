@@ -1,5 +1,5 @@
 import Db from "./controller/db";
-import LoginPage from "./view/loginpage";
+import LoginPage from "./view/login-page";
 import { select } from "d3-selection";
 import LoginState from "./controller/login-state";
 import CreateGame from "./view/create-game";
@@ -17,7 +17,7 @@ export default class App {
 
         if (state !== LoginState.LOGGED) {
             if (state === LoginState.INCORRECT) {
-                window.alert("Incorrect password");
+                window.alert("Nieprawidłowe hasło lub sesja wygasła. Zaloguj się ponownie.");
             }
             this.show(LoginPage);
         }
