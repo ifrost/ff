@@ -1,8 +1,8 @@
-import User from "./controller/user";
 import Db from "./controller/db";
 import LoginPage from "./view/loginpage";
 import { select } from "d3-selection";
 import LoginState from "./controller/login-state";
+import CreateGame from "./view/create-game";
 
 export default class App {
     db: Db;
@@ -13,26 +13,32 @@ export default class App {
 
     async init() {
 
-        const user: User = new User();
-
-        const state: LoginState = await this.db.auth(user);
+        const state: LoginState = await this.db.auth();
 
         if (state !== LoginState.LOGGED) {
             if (state === LoginState.INCORRECT) {
                 window.alert("Incorrect password");
             }
-            new LoginPage(this, select("body"));
-            window.localStorage.removeItem('ff');
+            this.show(LoginPage);
         }
         else {
-            console.log("logged in")
+            this.show(CreateGame);
         }
 
     }
 
     async login(username, password) {
-        window.localStorage.setItem('ff', JSON.stringify({ username: username, password: password }));
-        select("body").selectAll("*").remove();
-        this.init();
+        this.db.setCredentials(username, password);
+        await this.init();
     }
+
+    newGame() {
+        console.log('new game')
+    }
+
+    private show(ViewClass) {
+        select("body").selectAll("*").remove();
+        new ViewClass(this, select("body"));
+    }
+
 }

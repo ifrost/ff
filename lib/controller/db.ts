@@ -1,7 +1,6 @@
 import * as firebase from 'firebase';
 
 import Firestore = firebase.firestore.Firestore;
-import User from "./user";
 import LoginState from "./login-state";
 
 export default class Db {
@@ -20,21 +19,34 @@ export default class Db {
 
     }
 
-    async auth(user: User): Promise<LoginState> {
-        if (!user.username || !user.password) {
+    setCredentials(username, password) {
+        window.localStorage.setItem('ff', JSON.stringify({ username: username, password: password }));
+    }
+
+    async auth(): Promise<LoginState> {
+        const credentialsStorage: string = window.localStorage.getItem('ff');
+
+        if (!credentialsStorage) {
             return LoginState.NOT_LOGGED;
         }
+
+        const user = JSON.parse(credentialsStorage);
 
         return firebase.auth().signInWithEmailAndPassword(user.username, user.password).then(() => {
             this.firestore = firebase.firestore();
             return LoginState.LOGGED;
-        }).catch(function(error: any) {
+        }).catch((error: any) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.warn(errorCode, errorMessage);
+            this.logout();
             return LoginState.INCORRECT;
         });
 
+    }
+
+    logout() {
+        window.localStorage.removeItem('ff');
     }
 
 }
