@@ -3,12 +3,24 @@
         "baseUrl": "./lib/",
         "outDir": "./dist/",
         "sourceMap": true,
-        "noImplicitAny": true,
-        "module": "es6",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitAny": false,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": false,
+        "strictNullChecks": false,
+        "module": "es2015",
+        "moduleResolution": "node",
         "target": "es5",
-        "allowJs": true
+        "typeRoots" : ["./node_modules/@types", "./typings"],
+        "jsx": "react",
+        "lib": ["dom", "es6"],
+        "skipLibCheck": true
     },
-    "include": [
-        "lib/**/*"
+    "exclude": [
+        "node_modules"
     ]
 }
