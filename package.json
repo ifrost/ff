@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config=webpack.config.js",
+    "dev": "webpack-dev-server --open --config=webpack.dev.config.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,15 @@
   },
   "homepage": "https://github.com/ifrost/ff#readme",
   "dependencies": {
-    "firebase": "^5.9.0"
+    "firebase": "^5.9.0",
+    "html-webpack-plugin": "^3.2.0",
+    "lodash": "^4.17.11",
+    "webpack": "^4.29.6"
+  },
+  "devDependencies": {
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3333",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
   }
 }
