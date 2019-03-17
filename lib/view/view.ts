@@ -7,9 +7,12 @@ export default class View {
 
     protected root: any;
 
-    constructor(app: App, root: any) {
+    protected options: any;
+
+    constructor(app: App, root: any, options?: any) {
         this.app = app;
         this.root = root.node();
+        this.options = options || {};
         this.init();
         this.render();
     }
